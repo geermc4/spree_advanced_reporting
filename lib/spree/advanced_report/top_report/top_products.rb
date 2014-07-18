@@ -15,7 +15,7 @@ class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::Top
         if !li.product.nil?
           data[li.product.id] ||= {
             :name => li.product.name.to_s,
-            :taxons => li.product.taxons.collect(&:name).join(" ,"),
+            :taxons => li.product.taxons.collect(&:name).join(", "),
             :revenue => 0,
             :units => 0
           }
