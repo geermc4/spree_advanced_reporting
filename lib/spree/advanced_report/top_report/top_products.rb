@@ -15,6 +15,7 @@ class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::Top
         if !li.product.nil?
           data[li.product.id] ||= {
             :name => li.product.name.to_s,
+            :taxons => li.product.taxons.collect(&:name).join(" ,"),
             :revenue => 0,
             :units => 0
           }
@@ -24,9 +25,9 @@ class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::Top
       end
     end
 
-    self.ruportdata = Table(%w[name Units Revenue])
+    self.ruportdata = Table(%w[name Taxons Units Revenue])
     data.inject({}) { |h, (k, v) | h[k] = v[:revenue]; h }.sort { |a, b| a[1] <=> b [1] }.reverse[0..limit].each do |k, v|
-      ruportdata << { "name" => data[k][:name], "Units" => data[k][:units], "Revenue" => data[k][:revenue] } 
+      ruportdata << { "name" => data[k][:name], "Taxons" => data[k][:taxons], "Units" => data[k][:units], "Revenue" => data[k][:revenue] }
     end
     ruportdata.replace_column("Revenue") { |r| "$%0.2f" % r.Revenue }
     ruportdata.rename_column("name", "Product Name")
