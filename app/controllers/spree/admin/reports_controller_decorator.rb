@@ -23,7 +23,7 @@ Spree::Admin::ReportsController.class_eval do
 
   def basic_report_setup
     @reports = ADVANCED_REPORTS
-    @products = Spree::Product.all
+    @products = Spree::Product.all.order(:name)
     @taxons = Spree::Taxon.all
     if defined?(MultiDomainExtension)
       @stores = Store.all

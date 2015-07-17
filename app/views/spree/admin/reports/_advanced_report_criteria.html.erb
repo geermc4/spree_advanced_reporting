@@ -9,9 +9,9 @@
 
     <div id="taxon_products">
     <% if @taxons -%>
-        <%=Spree.t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' } ) %>
+        <%=Spree.t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' }, class: 'select2' ) %>
     <% end -%>
-    <%=Spree.t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' } ) %><br />
+    <%=Spree.t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' }, class: 'select2' ) %><br />
     </div>
 
     <%= Spree.t("date_range") %>:
