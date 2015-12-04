@@ -39,11 +39,9 @@ module Spree
       params[:search][:completed_at_not_null] = true
       params[:search][:state_not_eq] = 'canceled'
 
-      params[:search].merge!( { payments_payment_method_name_not_eq: "Quote" } )
-
       search = Order.search(params[:search])
       # self.orders = search.state_does_not_equal('canceled')
-      self.orders = search.result.uniq
+      self.orders = search.result.uniq.reject { |order| order.payments.valid.all? { |payment| payment.payment_method.name == "Quote" } }
 
       self.product_in_taxon = true
       if params[:advanced_reporting]
