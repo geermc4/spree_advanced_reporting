@@ -12,7 +12,7 @@ class Spree::Admin::AdvancedReportOverviewController < Spree::Admin::BaseControl
     @top_customers_report.ruportdata.remove_column(I18n.t("adv_report.units"))
 
     # From overview_dashboard, Cleanup eventually
-    orders = Spree::Order.find(:all, :order => "completed_at DESC", :limit => 10, :include => :line_items, :conditions => "completed_at is not null")
+    orders = Spree::Order.find(:all, :order => "completed_at DESC", :limit => 10, :include => {:line_items => {:product => :taxons}}, :conditions => "completed_at IS NOT NULL")
     @last_orders = orders.inject([]) { |arr, o| arr << [o.bill_address.firstname, o.line_items.sum(:quantity), o.total, o.number]; arr }
   end
 end

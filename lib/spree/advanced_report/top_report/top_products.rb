@@ -10,6 +10,8 @@ class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::Top
   def initialize(params, limit)
     super(params)
 
+    self.orders = Spree::Order.includes(line_items: {product: :taxons}).where(id: orders.map(&:id))
+
     orders.each do |order|
       order.line_items.each do |li|
         if !li.product.nil?
